@@ -16,8 +16,10 @@ import liquibase.util.StringUtils;
 import java.util.*;
 
 public class ChangeLogIterator {
-    private DatabaseChangeLog databaseChangeLog;
-    private List<ChangeSetFilter> changeSetFilters;
+    // Theta Changes on DatabaseChangeLog & ChangeSetFilters variables:
+    // Changed from private to protected to allow child class accessed
+    protected DatabaseChangeLog databaseChangeLog;
+    protected List<ChangeSetFilter> changeSetFilters;
 
     private Set<String> seenChangeSets = new HashSet<>();
 

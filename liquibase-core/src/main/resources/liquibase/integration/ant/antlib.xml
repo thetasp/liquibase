@@ -7,7 +7,7 @@
      <taskdef name="newtask" classname="liquibase.integration.ant.NewTask"/>
     -->
     <taskdef resource="liquibasetasks.properties"/>
-
+    <taskdef name="updateDatabaseWithDir" classname="liquibase.integration.ant.DatabaseUpdateWithDirectoryTask"/>
     <typedef name="database" classname="liquibase.integration.ant.type.DatabaseType"/>
     <typedef name="changelogparameters" classname="liquibase.integration.ant.type.ChangeLogParametersType"/>
 </antlib>
