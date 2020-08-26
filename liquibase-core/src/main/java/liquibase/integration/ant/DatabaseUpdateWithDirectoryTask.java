@@ -9,6 +9,7 @@ import liquibase.CustomLiquibase;
 import liquibase.Liquibase;
 import liquibase.exception.LiquibaseException;
 import liquibase.util.StringUtils;
+import liquibase.changelog.ChangeLogParameters.ChangeLogParameter;
 
 /**
  * Ant task for migrating a database forward without consolidating all the SQL into single files
@@ -68,6 +69,9 @@ public class DatabaseUpdateWithDirectoryTask extends AbstractChangeLogBasedTask 
         Liquibase liquibase = getLiquibase();
         CustomLiquibase customLiquibase = new CustomLiquibase(liquibase.getChangeLogFile(),
                 liquibase.getResourceAccessor(), liquibase.getDatabase());
+        for(ChangeLogParameter changelogParameter : liquibase.getChangeLogParameters().getChangeLogParameters()){
+            customLiquibase.setChangeLogParameter(changelogParameter.getKey(), changelogParameter.getValue());
+        }
         try {
             String outputDirectory = getOutputDirectory();
             if (StringUtils.isNotEmpty(outputDirectory)) {
