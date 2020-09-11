@@ -508,21 +508,22 @@ public class ChangeSet implements Conditional, ChangeLogChild {
                 database.setAutoCommit(!runInTransaction);
             }
 
-            executor.comment("Changeset " + toString(false));
-            if (StringUtils.trimToNull(getComments()) != null) {
-                String comments = getComments();
-                String[] lines = comments.split("\\n");
-                for (int i = 0; i < lines.length; i++) {
-                    if (i > 0) {
-                        lines[i] = database.getLineComment() + " " + lines[i];
-                    }
-                }
-                executor.comment(StringUtils.join(Arrays.asList(lines), "\n"));
-            }
-
             try {
                 if (preconditions != null) {
                     preconditions.check(database, databaseChangeLog, this, listener);
+                }
+                // Theta: Revise sequence of codes below to line 516 - 526 from 510 above
+                // to omit the comment if preconditions not matched
+                executor.comment("Changeset " + toString(false));
+                if (StringUtils.trimToNull(getComments()) != null) {
+                    String comments = getComments();
+                    String[] lines = comments.split("\\n");
+                    for (int i = 0; i < lines.length; i++) {
+                        if (i > 0) {
+                            lines[i] = database.getLineComment() + " " + lines[i];
+                        }
+                    }
+                    executor.comment(StringUtils.join(Arrays.asList(lines), "\n"));
                 }
             } catch (PreconditionFailedException e) {
                 if (listener != null) {
